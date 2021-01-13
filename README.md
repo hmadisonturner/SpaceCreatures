@@ -7,4 +7,5 @@
 ## Controls
 
 **Desktop:** Arrow keys and spacebar
+
 **Mobile:** On-screen touch controls
