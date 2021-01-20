@@ -1,15 +1,13 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesCreature from "./Creature.js"
 
-SpaceCreatures.Teuthid = class SpaceCreaturesTeuthid extends SpaceCreatures.Creature {
-  constructor(x,y) {
-    super(x,y)
+export default class SpaceCreaturesTeuthid extends SpaceCreaturesCreature {
+  constructor(x, y, constrainX, constrainY) {
+    super(x, y, constrainX, constrainY)
     this.height = 16
     this.width = 16
     this.direction = 1 
 
-    let image = SpaceCreatures.game.graphicsLibrary.teuthid_001
-
-    this.sprites.push(image) 
+    this.sprites.push('teuthid_001') 
     this.sequences.push([{frame: this.sprites[0], duration:0}])
   }
 }

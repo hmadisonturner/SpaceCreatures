@@ -1,6 +1,6 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesControl from "./Control.js"
 
-SpaceCreatures.DirectionalPad = class SpaceCreaturesDirectionalPad extends SpaceCreatures.Control {
+export default class SpaceCreaturesDirectionalPad extends SpaceCreaturesControl {
   constructor(goFunction, stopFunction) {
     super()
     if ('ontouchstart' in document.documentElement) {
@@ -35,3 +35,4 @@ SpaceCreatures.DirectionalPad = class SpaceCreaturesDirectionalPad extends Space
   }
 
 }
+

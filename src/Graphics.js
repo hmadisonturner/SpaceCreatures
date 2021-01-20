@@ -1,12 +1,13 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesGraphicsLibrary from "./GraphicsLibrary.js"
 
-SpaceCreatures.Graphics = class SpaceCreaturesGraphics {
+export default class SpaceCreaturesGraphics {
   constructor() {
     
     let containerDiv = document.getElementById('cvs')
     this.canvas = containerDiv.appendChild(document.createElement('canvas'))
     this.context = this.canvas.getContext('2d')
     this.context.imageSmoothingEnabled = false
+    this.graphicsLibrary = new SpaceCreaturesGraphicsLibrary()
     this.width = this.height = 500
 
     this.size = (event) => {
@@ -63,7 +64,7 @@ SpaceCreatures.Graphics = class SpaceCreaturesGraphics {
     let x = 0
     let y = this.height - 24
     while (num > 0) {
-      this.context.drawImage(SpaceCreatures.game.graphicsLibrary.player_002, x, y)
+      this.context.drawImage(this.graphicsLibrary.player_002, x, y)
       x += 24
       num--
     }
@@ -73,7 +74,7 @@ SpaceCreatures.Graphics = class SpaceCreaturesGraphics {
     this.context.fillRect(0,0,this.width,this.height)
   }
   drawSprite(sprite, position) {
-      this.context.drawImage(sprite,position.x,position.y)
+    this.context.drawImage(this.graphicsLibrary[sprite],position.x,position.y)
   }
 }
 

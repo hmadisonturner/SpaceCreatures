@@ -1,14 +1,14 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesCreature from "./Creature.js"
 
-SpaceCreatures.Lewloy = class SpaceCreaturesLewLoy extends SpaceCreatures.Creature {
-  constructor(x,y) {
-    super(x,y)
+export default class SpaceCreaturesLewLoy extends SpaceCreaturesCreature {
+  constructor(x, y, constrainX, constrainY) {
+    super(x, y, constrainX, constrainY)
     this.height = 16
     this.width = 16
     this.direction = 1 
 
-    this.sprites.push(SpaceCreatures.game.graphicsLibrary.lewloy_001) 
-    this.sprites.push(SpaceCreatures.game.graphicsLibrary.lewloy_002) 
+    this.sprites.push('lewloy_001') 
+    this.sprites.push('lewloy_002') 
 
     this.sequences.push([
       {frame: this.sprites[0], duration:24},

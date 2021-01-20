@@ -1,6 +1,6 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesControl from "./Control.js" 
 
-SpaceCreatures.Keyboard = class SpaceCreaturesKeyboard extends SpaceCreatures.Control {
+export default class SpaceCreaturesKeyboard extends SpaceCreaturesControl {
   constructor() {
     super()
     this.keys = {}

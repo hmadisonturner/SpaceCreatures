@@ -1,20 +1,22 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesSpriteObject from "./SpriteObject.js"
+import SpaceCreaturesDirectionalPad from "./DirectionalPad.js"
+import SpaceCreaturesButton from "./Button.js"
+import SpaceCreaturesKeyboard from "./Keyboard.js"
 
-SpaceCreatures.Player = class SpaceCreaturesPlayer extends SpaceCreatures.SpriteObject {
-  constructor(x,y) {
-    super(x,y)
+export default class SpaceCreaturesPlayer extends SpaceCreaturesSpriteObject {
+  constructor(x, y, constrainX, constrainY) {
+    super(x, y, constrainX, constrainY)
     this.height = 23
     this.width = 23
     this.speed = 4
+    this.shot = false
 
-    let image = SpaceCreatures.game.graphicsLibrary.player_002
-
-    this.sprites.push(image)
+    this.sprites.push('player_002')
     this.sequences.push([{frame: this.sprites[0], duration:0}])
 
-    this.touchPad = new SpaceCreatures.DirectionalPad((x,y)=>this.go(x,y), ()=>this.stop())
-    this.button = new SpaceCreatures.Button(()=>this.shoot())
-    this.keyboard = new SpaceCreatures.Keyboard()
+    this.touchPad = new SpaceCreaturesDirectionalPad((x,y)=>this.go(x,y), ()=>this.stop())
+    this.button = new SpaceCreaturesButton(()=>this.shoot())
+    this.keyboard = new SpaceCreaturesKeyboard()
     this.keyboard.bind('ArrowLeft',()=>this.goLeft(), ()=>this.stopLeft())
     this.keyboard.bind('ArrowRight',()=>this.goRight(), ()=>this.stopRight())
     this.keyboard.bind('ArrowUp',()=>this.goUp(),()=>this.stopUp())
@@ -58,27 +60,16 @@ SpaceCreatures.Player = class SpaceCreaturesPlayer extends SpaceCreatures.Sprite
     if (this.ySpeed > 0) this.ySpeed = 0
   }
   move() {
-    if (this.x + this.xSpeed < 0 || this.x + this.xSpeed > SpaceCreatures.game.graphics.width - this.width) {
+    if (this.x + this.xSpeed < 0 || this.x + this.xSpeed > this.constrainX - this.width) {
       this.xSpeed = 0
     }
-    if (this.y + this.ySpeed < 0 || this.y + this.ySpeed > SpaceCreatures.game.graphics.height - this.height) {
+    if (this.y + this.ySpeed < 0 || this.y + this.ySpeed > this.constrainX - this.height) {
       this.ySpeed = 0
     }
     super.move()
-    let creatures = SpaceCreatures.game.creatures
-    for (let i=0; i<creatures.length; i++) {
-      if(SpaceCreatures.Collision.collide(creatures[i],this)){
-	this.die()
-      }
-    }
-//    if (this.y<-this.height) this.die()
-
   }
   shoot() {
-    SpaceCreatures.game.missiles.push(new SpaceCreatures.Missile(this.x+this.width/2,this.y))
-  }
-  die() {
-    SpaceCreatures.game.die()
+    this.shot = true
   }
 }
 

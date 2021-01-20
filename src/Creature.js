@@ -1,16 +1,11 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesSpriteObject from "./SpriteObject.js"
 
-SpaceCreatures.Creature = class SpaceCreaturesCreature extends SpaceCreatures.SpriteObject{
-  constructor(x,y) {
-    super(x,y)
+export default class SpaceCreaturesCreature extends SpaceCreaturesSpriteObject{
+  constructor(x, y, constrainX, constrainY) {
+    super(x, y, constrainX, constrainY)
     this.xSpeed = 1
     this.yCounter = 0
     this.direction = 0
-  }
-  die() {
-    let game = SpaceCreatures.game
-    game.score++
-    game.creatures.splice(game.creatures.indexOf(this),1)
   }
   move() {
     if (this.yCounter === this.height) {
@@ -18,12 +13,12 @@ SpaceCreatures.Creature = class SpaceCreaturesCreature extends SpaceCreatures.Sp
       this.ySpeed = 0
     }
 
-    if ((this.x < 0) || (this.x + this.width >= SpaceCreatures.game.graphics.width)) {
+    if ((this.x < 0) || (this.x + this.width >= this.constrainX)) {
       this.xSpeed = -this.xSpeed
       this.ySpeed = this.direction  
     }
 
-    if ((this.y < 0) || (this.y + this.height >= SpaceCreatures.game.graphics.height)) {
+    if ((this.y < 0) || (this.y + this.height >= this.constrainY)) {
       this.direction = -this.direction
       this.ySpeed = this.direction
     }

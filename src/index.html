@@ -23,27 +23,12 @@
   </head>
   <body>
 	  
-    <script src="Collision.js"></script>
-    <script src="SpriteObject.js"></script>
-    <script src="Creature.js"></script>
-    <script src="Ocythe.js"></script>
-    <script src="Teuthid.js"></script>
-    <script src="Magentoid.js"></script>
-    <script src="Lewloy.js"></script>
-    <script src="Missile.js"></script>
-    <script src="Player.js"></script>
-    <script src="Graphics.js"></script>
-    <script src="GraphicsLibrary.js"></script>
-    <script src="Animation.js"></script>
-    <script src="Game.js"></script>
-    <script src="Control.js"></script>
-    <script src="Button.js"></script>
-    <script src="DirectionalPad.js"></script>
-    <script src="Keyboard.js"></script>
-    <script>
-      var SpaceCreatures = SpaceCreatures || {}
+    <script type="module">
+
+    import SpaceCreaturesGame from "./Game.js"
+
       onload = function () {
-        SpaceCreatures.game = new SpaceCreatures.Game() 
+        new SpaceCreaturesGame() 
       }
     </script>
     <div id="button_ctrl">

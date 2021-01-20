@@ -1,8 +1,8 @@
-var SpaceCreatures = SpaceCreatures || {}
 
-SpaceCreatures.Control = class SpaceCreaturesControl {
+export default class SpaceCreaturesControl {
   constructor() {
     this.handlers = []
+    window.foo = this.handlers
   }
   unbindAll() {
     this.handlers.forEach(x => x.target.removeEventListener(x.type, x.handler))

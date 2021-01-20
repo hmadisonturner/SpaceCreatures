@@ -1,11 +1,11 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesCreature from "./Creature.js"
 
-SpaceCreatures.Ocythe = class SpaceCreaturesOcythe extends SpaceCreatures.Creature {
-  constructor(x,y) {
-    super(x,y)
+export default class SpaceCreaturesOcythe extends SpaceCreaturesCreature {
+  constructor(x, y, constrainX, constrainY) {
+    super(x, y, constrainX, constrainY)
     this.height = this.width = 16
     this.direction = 1
-    this.sprites.push(SpaceCreatures.game.graphicsLibrary.ocythe_001)
+    this.sprites.push('ocythe_001')
     this.sequences = [
       [
         {frame: this.sprites[0], duration: 0}

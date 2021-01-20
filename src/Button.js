@@ -1,6 +1,6 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesControl from "./Control.js"
 
-SpaceCreatures.Button= class SpaceCreaturesButton extends SpaceCreatures.Control {
+export default class SpaceCreaturesButton extends SpaceCreaturesControl {
   constructor(handlerFunction) {
     super()
     if ('ontouchstart' in document.documentElement) {

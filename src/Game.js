@@ -1,14 +1,21 @@
-var SpaceCreatures = SpaceCreatures || {}
+import SpaceCreaturesGraphics from "./Graphics.js"
+import SpaceCreaturesAnimation from "./Animation.js"
+import SpaceCreaturesCollision from "./Collision.js"
+import SpaceCreaturesPlayer from "./Player.js"
+import SpaceCreaturesMissile from "./Missile.js"
+import SpaceCreaturesTeuthid from "./Teuthid.js"
+import SpaceCreaturesMagentoid from "./Magentoid.js" 
+import SpaceCreaturesLewloy from "./Lewloy.js" 
+import SpaceCreaturesOcythe from "./Ocythe.js" 
 
-SpaceCreatures.Game = class SpaceCreaturesGame {
+export default class SpaceCreaturesGame {
   constructor() {
     this.frameCounter = 0
-    this.graphics = new SpaceCreatures.Graphics()
-    this.graphicsLibrary = new SpaceCreatures.GraphicsLibrary()
+    this.graphics = new SpaceCreaturesGraphics()
     this.hiScore = localStorage.hiScore ? localStorage.hiScore : 0
     this.events = { 1 : () => this.start() }
 
-    SpaceCreatures.Animation.animate(()=>this.draw())
+    SpaceCreaturesAnimation.animate(()=>this.draw())
   }
   initGame () {
     this.initPlayer()
@@ -27,22 +34,56 @@ SpaceCreatures.Game = class SpaceCreaturesGame {
     this.events = {}
   }
   initPlayer() {
+    const gameSize = [this.graphics.width, this.graphics.height]
+
     if (this.player) this.player.releaseControls()
     delete this.player
-    this.player = new SpaceCreatures.Player()
-    this.player.x = (this.graphics.width/2) - (this.player.width/2)
-    this.player.y = this.graphics.height - this.player.height - 24 
+
+    this.player = new SpaceCreaturesPlayer(gameSize[0] / 2, 0, ...gameSize)
+    this.player.y = gameSize[1] - this.player.height - 24
   }
   draw() {
     this.graphics.background()
-    if (this.score || this.nextOneUp || this.hiScore) this.graphics.drawScores(this.score, this.nextOneUp, this.hiScore)
-    if (this.missiles) this.missiles.forEach((x)=>this.graphics.drawSprite(x.sprite, x.position))
-    if (this.player) this.graphics.drawSprite(this.player.sprite, this.player.position)
-    if (this.lives) this.graphics.drawLives(this.lives)
-    if (this.creatures) this.creatures.forEach((x)=>this.graphics.drawSprite(x.sprite, x.position))
-    if (this.message) this.graphics.drawMessage(this.message)
-    if (this.errorMessage) this.graphics.drawErrorMessage(this.errorMessage)
-    if (this.events[this.frameCounter]) this.events[this.frameCounter]()
+    this.graphics.drawScores(this.score, this.nextOneUp, this.hiScore)
+
+    if (this.player?.shot) {
+      this.missiles.push(new SpaceCreaturesMissile(
+        this.player.x + (this.player.width/2), 
+        this.player.y, 
+        this.graphics.width, 
+        this.graphics.height
+      ))
+      
+      this.player.shot = false
+    }
+
+    this.missiles?.forEach(missile => {
+      this.creatures?.forEach(creature => { 
+        if (SpaceCreaturesCollision.collide(missile, creature)) {
+          missile.die()
+          creature.die()
+          this.score++
+        }
+      })
+    })
+
+    this.creatures?.forEach(creature => {
+      if (SpaceCreaturesCollision.collide(creature, this.player)) {
+        creature.die()
+        this.die()
+      }
+    })
+
+    this.missiles = this.missiles?.filter(missile => !missile.dead)
+    this.creatures = this.creatures?.filter(creature => !creature.dead)
+
+    this.missiles?.forEach(x => this.graphics.drawSprite(x.sprite, x.position))
+    this.player ? this.graphics.drawSprite(this.player.sprite, this.player.position) : null
+    this.lives ? this.graphics.drawLives(this.lives) : null
+    this.creatures?.forEach((x)=>this.graphics.drawSprite(x.sprite, x.position))
+    this.message ? this.graphics.drawMessage(this.message) : null
+    this.errorMessage ? this.graphics.drawErrorMessage(this.errorMessage) : null
+    this.events[this.frameCounter] ? this.events[this.frameCounter]() : null
     this.frameCounter++
   }
   nextLevel () {
@@ -72,10 +113,13 @@ SpaceCreatures.Game = class SpaceCreaturesGame {
   levelOne() {
     this.initLevel()
     this.initPlayer()
-    for (let i=0; i<10; i++) { this.creatures.push(new SpaceCreatures.Teuthid((24*i)+20, 30))}
-    for (let i=0; i<10; i++) { this.creatures.push(new SpaceCreatures.Magentoid((24*i)+20, 60))}
-    for (let i=0; i<10; i++) { this.creatures.push(new SpaceCreatures.Lewloy((24*i)+24, 90))}
-    for (let i=0; i<10; i++) { this.creatures.push(new SpaceCreatures.Ocythe(24*i+20, 120))}
+    const gameSize = [this.graphics.width, this.graphics.height]
+    for (let i=0; i<10; i++) { 
+      this.creatures.push(new SpaceCreaturesTeuthid((24*i)+20, 30, ...gameSize))
+      this.creatures.push(new SpaceCreaturesMagentoid((24*i)+20, 60, ...gameSize))
+      this.creatures.push(new SpaceCreaturesLewloy((24*i)+24, 90, ...gameSize))
+      this.creatures.push(new SpaceCreaturesOcythe(24*i+20, 120, ...gameSize))
+    }
     this.levelLoop()
   }
   levelLoop() {

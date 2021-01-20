@@ -1,6 +1,5 @@
-var SpaceCreatures = SpaceCreatures || {}
 
-SpaceCreatures.Collision = class SpaceCreaturesCollision {
+export default class SpaceCreaturesCollision {
   static collide(a,b) {
     let ax1=a.x, ay1=a.y, ax2=a.x+a.width, ay2=a.y+a.height,
         bx1=b.x, by1=b.y, bx2=b.x+b.width, by2=b.y+b.height

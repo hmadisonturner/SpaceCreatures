@@ -1,9 +1,10 @@
-var SpaceCreatures = SpaceCreatures || {}
 
-SpaceCreatures.SpriteObject = class SpaceCreaturesSpriteObject {
-  constructor(x,y) {
+export default class SpaceCreaturesSpriteObject {
+  constructor(x, y, constrainX, constrainY) {
     this.x = x ? x : 0
     this.y = y ? y : 0
+    this.constrainX = constrainX
+    this.constrainY = constrainY
     this.height = 0
     this.width = 0
     this.xSpeed = 0
@@ -13,6 +14,7 @@ SpaceCreatures.SpriteObject = class SpaceCreaturesSpriteObject {
     this.currentSequence = 0
     this.currentFrame = 0
     this.sequenceCounter = 0
+    this.dead = false
   }
   get sprite() {
     this.move()
@@ -32,6 +34,9 @@ SpaceCreatures.SpriteObject = class SpaceCreaturesSpriteObject {
   move() {
     this.x += this.xSpeed 
     this.y += this.ySpeed 
+  }
+  die() {
+    this.dead = true
   }
 }
 
