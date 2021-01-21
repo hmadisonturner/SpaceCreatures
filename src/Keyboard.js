@@ -24,3 +24,4 @@ export default class SpaceCreaturesKeyboard extends SpaceCreaturesControl {
     this.keys[key] = [ keyDownHandler, keyUpHandler ]
   }
 }
+

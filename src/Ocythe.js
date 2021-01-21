@@ -13,3 +13,4 @@ export default class SpaceCreaturesOcythe extends SpaceCreaturesCreature {
     ]
   }
 }
+

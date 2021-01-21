@@ -14,7 +14,11 @@ export default class SpaceCreaturesPlayer extends SpaceCreaturesSpriteObject {
     this.sprites.push('player_002')
     this.sequences.push([{frame: this.sprites[0], duration:0}])
 
-    this.touchPad = new SpaceCreaturesDirectionalPad((x,y)=>this.go(x,y), ()=>this.stop())
+    this.touchPad = new SpaceCreaturesDirectionalPad(
+      (x,y)=>this.go(x,y), 
+      ()=>this.stop()
+    )
+
     this.button = new SpaceCreaturesButton(()=>this.shoot())
     this.keyboard = new SpaceCreaturesKeyboard()
     this.keyboard.bind('ArrowLeft',()=>this.goLeft(), ()=>this.stopLeft())
@@ -60,10 +64,13 @@ export default class SpaceCreaturesPlayer extends SpaceCreaturesSpriteObject {
     if (this.ySpeed > 0) this.ySpeed = 0
   }
   move() {
-    if (this.x + this.xSpeed < 0 || this.x + this.xSpeed > this.constrainX - this.width) {
+    if (this.x + this.xSpeed < 0 || 
+        this.x + this.xSpeed > this.constrainX - this.width) {
       this.xSpeed = 0
     }
-    if (this.y + this.ySpeed < 0 || this.y + this.ySpeed > this.constrainX - this.height) {
+
+    if (this.y + this.ySpeed < 0 || 
+        this.y + this.ySpeed > this.constrainX - this.height) {
       this.ySpeed = 0
     }
     super.move()

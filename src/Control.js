@@ -1,4 +1,3 @@
-
 export default class SpaceCreaturesControl {
   constructor() {
     this.handlers = []

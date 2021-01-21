@@ -1,4 +1,3 @@
-
 export default class SpaceCreaturesSpriteObject {
   constructor(x, y, constrainX, constrainY) {
     this.x = x ? x : 0

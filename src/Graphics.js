@@ -3,7 +3,7 @@ import SpaceCreaturesGraphicsLibrary from "./GraphicsLibrary.js"
 export default class SpaceCreaturesGraphics {
   constructor() {
     
-    let containerDiv = document.getElementById('cvs')
+    const containerDiv = document.getElementById('cvs')
     this.canvas = containerDiv.appendChild(document.createElement('canvas'))
     this.context = this.canvas.getContext('2d')
     this.context.imageSmoothingEnabled = false
@@ -11,12 +11,19 @@ export default class SpaceCreaturesGraphics {
     this.width = this.height = 500
 
     this.size = (event) => {
-      this.canvas.width = this.canvas.height = Math.min(window.innerWidth, window.innerHeight)
-      this.context.scale(this.canvas.width/this.width, this.canvas.height/this.height)
-      let pad = document.getElementById('pad_ctrl')
-      let btn = document.getElementById('button_ctrl')
-      btn.style.top = pad.style.top = window.innerHeight - pad.clientHeight - (0.05*window.innerHeight)
-      
+      const pad = document.getElementById('pad_ctrl')
+      const btn = document.getElementById('button_ctrl')
+
+      this.canvas.width = 
+        this.canvas.height = 
+        Math.min(window.innerWidth, window.innerHeight)
+
+      this.context.scale(this.canvas.width/this.width, 
+        this.canvas.height/this.height)
+
+      btn.style.top = 
+        pad.style.top = 
+        window.innerHeight - pad.clientHeight - (0.05*window.innerHeight)
     }
 
     this.size()
@@ -62,7 +69,7 @@ export default class SpaceCreaturesGraphics {
   }
   drawLives(num) {
     let x = 0
-    let y = this.height - 24
+    const y = this.height - 24
     while (num > 0) {
       this.context.drawImage(this.graphicsLibrary.player_002, x, y)
       x += 24
